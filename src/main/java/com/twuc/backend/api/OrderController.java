@@ -34,7 +34,7 @@ public class OrderController {
         return ResponseEntity.ok(orderRepository.findAll());
     }
 
-    @DeleteMapping("/order{id}")
+    @DeleteMapping("/order/{id}")
     public ResponseEntity deleteOrder(@PathVariable Integer id) {
         orderRepository.deleteById(id);
         return ResponseEntity.ok().build();

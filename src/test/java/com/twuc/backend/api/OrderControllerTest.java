@@ -60,7 +60,7 @@ public class OrderControllerTest {
     @Test
     void should_delete_order_by_id() throws Exception {
         Integer id = orderRepository.findAll().get(0).getId();
-        mockMvc.perform(delete("/order" + id.toString()))
+        mockMvc.perform(delete("/order/" + id.toString()))
                 .andExpect(status().isOk());
 
         List<OrderDto> all = orderRepository.findAll();
