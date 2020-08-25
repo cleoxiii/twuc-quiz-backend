@@ -1,15 +1,10 @@
 package com.twuc.backend.api;
 
-import ch.qos.logback.core.db.DBHelper;
 import com.twuc.backend.dto.OrderDto;
-import com.twuc.backend.dto.ProductDto;
 import com.twuc.backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
@@ -37,5 +32,11 @@ public class OrderController {
     @GetMapping("/orders")
     public ResponseEntity<List<OrderDto>> getOrders() {
         return ResponseEntity.ok(orderRepository.findAll());
+    }
+
+    @DeleteMapping("/order{id}")
+    public ResponseEntity deleteOrder(@PathVariable Integer id) {
+        orderRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

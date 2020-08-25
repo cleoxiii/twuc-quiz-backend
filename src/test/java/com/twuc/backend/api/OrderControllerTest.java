@@ -13,9 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,5 +55,15 @@ public class OrderControllerTest {
         mockMvc.perform(get("/orders").content(jsonString).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void should_delete_order_by_id() throws Exception {
+        Integer id = orderRepository.findAll().get(0).getId();
+        mockMvc.perform(delete("/order" + id.toString()))
+                .andExpect(status().isOk());
+
+        List<OrderDto> all = orderRepository.findAll();
+        assertEquals(0, all.size());
     }
 }
